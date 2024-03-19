@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Tracking</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script>
+    let map, directionsService, directionsRenderer;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: -23.877943, lng: 29.408058 },
+        zoom: 12,
+      });
+
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+    }
+
+    function trackDelivery() {
+      const origin = document.getElementById('origin').value;
+      const destination = document.getElementById('destination').value;
+
+      if (!origin || !destination) {
+        alert('Please enter both origin and destination addresses.');
+        return;
+      }
+
+      calculateAndDisplayRoute(origin, destination);
+    }
+
+    function calculateAndDisplayRoute(origin, destination) {
+      const request = {
+        origin: origin,
+        destination: destination,
+        travelMode: 'DRIVING',
+      };
+
+      directionsService.route(request, function (result, status) {
+        if (status == 'OK') {
+          directionsRenderer.setDirections(result);
+
+          // Log the estimated delivery time
+          const duration = result.routes[0].legs[0].duration.text;
+          console.log('Estimated delivery time:', duration);
+          document.getElementById('one').textContent = 'Parcel will arrive in :'+ duration;
+        } else {
+          alert('Error in calculating the route. Please try again.');
+        }
+      });
+    }
+
+  function useDeviceLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const userLocation = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+
+        map.setCenter(userLocation);
+        map.setZoom(14);
+
+        document.getElementById('destination').value = userLocation.toString();
+        
+        // Wait for a short delay before attempting to calculate the route
+        setTimeout(function() {
+          const origin = document.getElementById('origin').value;
+          const destination = document.getElementById('destination').value;
+          calculateAndDisplayRoute(origin, destination);
+        }, 1000);
+      },
+      function () {
+        alert('Error getting your location. Make sure location services are enabled.');
+      }
+    );
+  } else {
+    alert('Geolocation is not supported by your browser.');
+  }
+}
+  </script>
+  
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAJI2Suex0nm5EGXL9TGrK7HLvjGHZZKk&libraries=places&callback=initMap" async defer></script>
+  
+     <script>
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // You can replace the API key and URL with your own reverse geocoding service
+            const apiKey = 'YOUR_API_KEY';
+            const reverseGeocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDAJI2Suex0nm5EGXL9TGrK7HLvjGHZZKk`;
+
+            fetch(reverseGeocodingURL)
+                .then(response => response.json())
+                .then(data => {
+                    const location = data.results[0].formatted_address;
+                    document.getElementById('destination').value = location;
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                    alert('Error fetching location. Please try again.');
+                });
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+  <style>
+      
+      
+      	body{
+	
+	
+	
+	background-color: #C21460;
+	
+	}
+	
+
+
+
+      
+      
+      
+      
+      
+  </style>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Delivery Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li>
+          <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li>
+          <a class="nav-link" href="cart.html">Cart</a>
+        </li>
+        <li>
+          <a class="nav-link" href="checkout.html">checkOut</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <form id="deliveryForm">
+      <div class="form-group">
+        <label for="origin">Origin:</label>
+        <input type="text" class="form-control" id="origin" placeholder="Enter origin address" />
+      </div>
+      <div class="form-group">
+        <label for="destination">Destination:</label>
+        <input type="text" class="form-control" id="destination" placeholder="Enter destination address" />
+      </div>
+      <button type="button" class="btn btn-primary" onclick="trackDelivery()">Track Delivery</button>
+      <button type="button" class="btn btn-secondary" onclick="getUserLocation()">Use My Location</button>
+    </form>
+       <h3 id="one"></h3>
+    <div id="map" style="height: 400px; margin-top: 20px;"></div>
+    
+ 
+    
+    
+  </div>
+
+
+
+
+
+
+
+    <script>
+
+			const nameArray = JSON.parse(sessionStorage.getItem('myArray'));
+			const sizeArray = JSON.parse(sessionStorage.getItem('mysizes'));
+let index = 0;
+        async function fetchInfoFromPHP(name) {
+            const apiUrl = `fetchInfo.php?name=${name}`;
+            const response = await fetch(apiUrl);
+            return response.json();
+        }
+
+        async function fetchData() {
+            for (const name of nameArray) {
+                const info = await fetchInfoFromPHP(name);
+
+
+document.getElementById('origin').value = `${info.location}`;
+
+
+
+
+
+
+            }
+
+        }
+
+        fetchData();
+    </script>
+
+
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

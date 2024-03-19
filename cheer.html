@@ -1,0 +1,44 @@
+Certainly! You can create an HTML page with 4 different divs, each containing a checkbox and identified by fruit names. Here's the modified code:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkbox IDs with Fruit Names</title>
+</head>
+<body>
+    <div id="appleDiv">
+        <input type="checkbox" id="appleCheckbox"> Apple
+    </div>
+    <div id="bananaDiv">
+        <input type="checkbox" id="bananaCheckbox"> Banana
+    </div>
+    <div id="orangeDiv">
+        <input type="checkbox" id="orangeCheckbox"> Orange
+    </div>
+    <div id="strawberryDiv">
+        <input type checkbox id="strawberryCheckbox"> Strawberry
+    </div>
+    <button onclick="displayCheckedDivs()">Display Checked Fruits</button>
+
+    <script>
+        function displayCheckedDivs() {
+            const checkedFruits = [];
+
+            // Loop through the checkboxes and check if they are checked
+            const fruits = ["apple", "banana", "orange", "strawberry"];
+            fruits.forEach(fruit => {
+                const checkbox = document.getElementById(`${fruit}Checkbox`);
+                if (checkbox.checked) {
+                    checkedFruits.push(fruit);
+                }
+            });
+
+            alert("Checked Fruits: " + checkedFruits.join(', '));
+        }
+    </script>
+</body>
+</html>
+```
+
+In this version, the div IDs and checkboxes are labeled with fruit names, and the JavaScript code is adjusted accordingly to handle the fruit names instead of numbers. When you click the "Display Checked Fruits" button, it displays the names of the checked fruits in an alert.

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Password</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+<style>
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 5;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input,
+textarea,
+select {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+#kk {
+    display: flex;
+    flex-direction: column;
+}
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #3498db;
+
+}
+
+li {
+float: left;
+border-right:1px solid #bbb;
+}
+
+li:last-child {
+border-right: none;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+border: 1px solid white;
+border-radius: 5%;
+}
+
+li a:hover:not(.active) {
+background-color: #111;
+}
+
+.active {
+background-color: #FFA333;
+}
+</style>
+</head>
+
+<body>
+  <ul>
+    <li><a class="active" href="index.php">Home</a></li>
+    <li><a href="cart.html">Cart</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li style="float:right"><a href="login.html">LogIn</a></li>
+  </ul>
+<div class="container">
+
+      <form form action="signup.php" method="post" enctype="multipart/form-data">
+
+ <label for="">user name</label>
+               <input type="text" name="username" required >
+
+               <label for="">password</label>
+
+
+               <input type="password" name="password" id="password" required>
+
+
+
+
+
+
+<label for="">profile pic</label>
+            <input type="file" name="image" accept="image/*" required>
+<label for="">id no</label>
+               <input type="text" name="id_number" required >
+
+                <label for="">full name</label>
+
+               <input type="text" name="full_name" required>
+
+
+ <label for="">surname</label>
+
+               <input type="text" name="surname" required >
+
+              <label for="">location</label>
+
+               <input type="text" name="location" required>
+
+
+ <label for="">contact NO.</label>
+
+               <input type="tel" name="contact" required >
+
+
+
+<label for="">Email</label>
+
+               <input type="email" name="email" required >
+
+
+
+
+                  <input type="submit" value="Signup">
+
+      </form>
+    </form>
+    <div id="kk">
+      <form action="login.html" method="post">
+	<input type="submit" id="kg" value="ALREADY HAVE AN ACCOUNT. LOGIN"/>
+  </form>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea,
+        select {
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #3498db;
+
+        }
+
+        li {
+        float: left;
+        border-right:1px solid #bbb;
+        }
+
+        li:last-child {
+        border-right: none;
+        }
+
+        li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 8px;
+        text-decoration: none;
+        border: 1px solid white;
+        border-radius: 5%;
+        }
+
+        li a:hover:not(.active) {
+        background-color: #111;
+        }
+
+        .active {
+        background-color: #FFA333;
+        }
+
+    </style>
+</head>
+<body>
+  <ul>
+    <li><a href="home.php">Home</a></li>
+    <li><a class="active" href="uploadd.html">addItems</a></li>
+    <li><a href="messages.php">messages</a></li>
+    <li style="float:right"><a href="sa.php">Logout</a></li>
+  </ul>
+
+
+    <div class="container">
+        <h2>Add Product</h2>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <label for="name">Product Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" rows="4" required></textarea>
+
+            <label for="price">Price:</label>
+            <input type="number" name="price" step="0.01" required>
+
+            <label for="location">Location:</label>
+            <input type="text" name="location" required>
+
+            <label for="category">Category:</label>
+            <select name="category" required>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <option value="home">Home & Living</option>
+                <!-- Add more categories as needed -->
+            </select>
+
+            <label for="image">Product Image:</label>
+            <input type="file" name="image" accept="image/*" required>
+
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .profile-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="profile-container">
+        <img src="" alt="Profile Picture" id="profile-pic">
+        <h2 id="username"></h2>
+        <p id="contact-number"></p>
+        <p id="location"></p>
+    </div>
+    <script>
+      const nameArray = JSON.parse(sessionStorage.getItem('myArray'));
+			const sizeArray = JSON.parse(sessionStorage.getItem('mysizes'));
+      let userId ="";
+let index = 0;
+        async function fetchInfoFromPHP(name) {
+            const apiUrl = `fetchInfo.php?name=${name}`;
+            const response = await fetch(apiUrl);
+            return response.json();
+        }
+
+        async function fetchData() {
+            for (const name of nameArray) {
+                const info = await fetchInfoFromPHP(name);
+
+userId =  `${info.username}`;
+
+//document.getElementById("profile-pic").src = `${info.profile_picture}`;
+//document.getElementById("username").innerText =  "username " + `${info.username}`;
+//document.getElementById("contact-number").innerText =  `${info.contact_number}`;
+//document.getElementById("location").innerText =  `${info.email}`;
+
+
+let sambo = "sambo";
+console.log(sambo.substring(0, sambo.length-1));
+            }
+
+        }
+
+fetchData();
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Assuming you have a JavaScript variable with the user ID
+            //const userId = "joyy";
+console.log(userId);
+            // Fetch user data using PHP and SQL
+            fetchUserData(userId);
+        });
+
+        function fetchUserData(userId) {
+          console.log(userId);
+            // Use AJAX or fetch API to communicate with PHP script
+            // Here, I'm using a simple fetch example for demonstration
+            fetch(`getUser.php?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayUserData(data);
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+        }
+
+        function displayUserData(userData) {
+            document.getElementById("profile-pic").src = userData.profile_pic;
+            document.getElementById("username").innerText = userData.username;
+            document.getElementById("contact-number").innerText = userData.contact_number;
+            document.getElementById("location").innerText = userData.location;
+        }
+    </script>
+</body>
+</html>

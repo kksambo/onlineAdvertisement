@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advibes</title>
+    <!-- Include Bootstrap CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  input[type="checkbox"]{
+
+
+  width:15px;
+  height:15px;
+background-color: #C21460;
+
+  }
+
+
+	body{
+
+
+
+	background-color: #C21460;
+
+	}
+
+
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #3498db;
+
+}
+
+li {
+  float: left;
+  border-right:1px solid #bbb;
+}
+
+li:last-child {
+  border-right: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+border: 1px solid white;
+border-radius: 5%;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #FFA333;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 15px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.button1 {
+  display: inline-block;
+  border-radius: 4px;
+  background-color:#FFFFFF ;
+  border: none;
+  color:  #f4511e;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+  width: 120px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  float: right;
+}
+
+.button1 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button1 span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button1:hover span {
+  padding-right: 15px;
+}
+
+.button1:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+h1 {
+	color: white;
+	font-family:  "Great Vibes", cursive;
+
+	font-size: 36px;
+	font-weight: 400;
+	font-style: italic;
+	line-height: 44px;
+	margin: 0 0 12px;
+	text-align: center;
+}
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 15px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+#se{
+display: none;
+
+}
+  </style>
+</head>
+<body>
+
+<ul>
+  <li><a href="index.php">Home</a></li>
+  <li><a class="active" href="#">Cart</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <li style="float:right"><a href="login.html">LogIn</a></li>
+</ul>
+
+<div class='container'><h1 class='text-center my-4'>YourCart @Advibes</h1><div class='row' id="sambo">
+
+
+
+</div></div>
+
+
+    <script>
+
+			const nameArray = JSON.parse(sessionStorage.getItem('myArray'));
+			const sizeArray = JSON.parse(sessionStorage.getItem('mysizes'));
+let index = 0;
+        async function fetchInfoFromPHP(name) {
+            const apiUrl = `fetchInfo.php?name=${name}`;
+            const response = await fetch(apiUrl);
+            return response.json();
+        }
+
+        async function fetchData() {
+            for (const name of nameArray) {
+                const info = await fetchInfoFromPHP(name);
+
+
+
+
+	 document.getElementById('sambo').innerHTML += "<div class='col-lg-4 col-md-6 col-sm-12 mb-4'>"+"<div class='card' id='forimg'>"+
+	 "<img src='"+name+"' class='card-img-top' alt='Clothing'>"+
+	 "<div class='card-body'>"+"<h5 class='card-title'>"+`${info.name}`+"</h5>"+
+                    "<p class='card-text'>"+`${info.description}`+"</p>"+
+                    "<p class='card-text'>"+"R"+`${info.price}`+"</p>"+
+			"<div id='kk'><form action='seller.php' method='post'><input type='submit' id='kg' value='CHAT' class='button'/><input type='text' id='se' name='search' value="+`${info.username}`+"></form></div>"+
+
+
+
+			"</div></div></div>";
+
+index ++;
+
+
+
+            }
+
+        }
+
+        fetchData();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+function checkout(){
+
+window.location.href = 'checkout.html';
+
+}
+function track(){
+
+window.location.href = 'getUser.php';
+
+}
+function contact(){
+
+window.location.href = 'contactSeller.html';
+
+}
+</script>
+</body>
+
+</html>
